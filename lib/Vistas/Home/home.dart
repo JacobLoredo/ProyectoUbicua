@@ -1,0 +1,197 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:proyectoubicua/Vistas/Home/Productos.dart';
+import 'package:proyectoubicua/Vistas/Home/barraBusqueda.dart';
+import 'package:proyectoubicua/Vistas/Home/botonCarrito.dart';
+import 'package:proyectoubicua/Vistas/Home/categorias.dart';
+import 'package:proyectoubicua/Vistas/Login/login.dart';
+import 'package:proyectoubicua/Vistas/size_config.dart';
+import 'package:proyectoubicua/main.dart';
+import 'package:proyectoubicua/network_utils/api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class MyHomeClass extends StatelessWidget {
+  static String routeName = "/home";
+  const MyHomeClass({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        actions: <Widget>[
+          BarraBusqueda(),
+          BotonCarrito(),
+        ],
+        backgroundColor: colores['naranja'],
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenHeight(20),
+                vertical: getProportionateScreenHeight(2),
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: getProportionateScreenWidth(20),
+                  ),
+                  TituloSeccion(
+                    text: "Categorias",
+                    press: () {},
+                  ),
+                  Categorias(),
+                  PopularProducts(),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+      drawer: buildDrawer(context),
+    );
+  }
+
+  Drawer buildDrawer(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          SizedBox(
+            height: 110,
+            child: DrawerHeader(
+              margin: const EdgeInsets.symmetric(
+                horizontal: 0,
+              ),
+              child: ListTile(
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 1,
+                  horizontal: 0,
+                ),
+                leading: Icon(
+                  Icons.account_circle,
+                  size: 60,
+                  color: Colors.white,
+                ),
+                title: Text(
+                  'Hola jacob',
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 18,
+                    color: Colors.black,
+                  ),
+                ),
+                subtitle: Text(
+                  'Bienvenido',
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                ),
+                trailing: Icon(Icons.keyboard_arrow_right),
+              ),
+              decoration: BoxDecoration(
+                color: colores['naranja'],
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 50,
+            child: ListTile(
+              leading: Icon(
+                Icons.settings,
+                color: Colors.black,
+              ),
+              title: Text('Configuracion'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          SizedBox(
+            height: 50,
+            child: ListTile(
+              leading: Icon(
+                Icons.home,
+                color: Colors.black,
+              ),
+              title: Text('Editar Perfil'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          SizedBox(
+            height: 50,
+            child: ListTile(
+              leading: Icon(
+                Icons.logout,
+                color: Colors.black,
+              ),
+              title: Text('Cerrar Sesion'),
+              onTap: () {
+                logout();
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TituloSeccion extends StatelessWidget {
+  const TituloSeccion({
+    Key key,
+    @required this.text,
+    @required this.press,
+  }) : super(key: key);
+  final String text;
+  final GestureTapCallback press;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: getProportionateScreenWidth(20),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            this.text,
+            style: TextStyle(
+              fontSize: getProportionateScreenWidth(20),
+              color: Colors.black,
+            ),
+          ),
+        
+          GestureDetector(
+            onTap: press,
+            child: Text("Ver más"),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+void logout() async {
+  var res = await Network().productos('/listproductos');
+  var body = json.decode(res.body);
+  if (body['success']) {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    localStorage.remove('user');
+    localStorage.remove('token');
+    MaterialPageRoute(builder: (context) => MyloginClass());
+  }
+}
