@@ -158,11 +158,11 @@ class _SignFormState extends State<SignForm> {
 
     var res = await Network().authData(data, '/login');
     var body = json.decode(res.body);
-    
     if(body['success']){
       SharedPreferences localStorage = await SharedPreferences.getInstance();
-      localStorage.setString('token', json.encode(body['token']));
+      localStorage.setString('token', json.encode(body['user_token']));
       localStorage.setString('user', json.encode(body['user']));
+     
       Navigator.push(
           context,
           new MaterialPageRoute(

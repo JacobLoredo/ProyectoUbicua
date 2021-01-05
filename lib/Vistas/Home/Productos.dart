@@ -1,11 +1,15 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:proyectoubicua/Models/Producto.dart';
+import 'package:proyectoubicua/Models/Usuario.dart';
 import 'package:proyectoubicua/Vistas/Home/CartaProdcuto.dart';
 import 'package:proyectoubicua/Vistas/Home/home.dart';
 import 'package:proyectoubicua/Vistas/Producto/productoVista.dart';
 import 'package:proyectoubicua/Vistas/size_config.dart';
 import 'dart:convert';
 import 'package:proyectoubicua/network_utils/api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PopularProducts extends StatefulWidget {
   @override
@@ -14,8 +18,17 @@ class PopularProducts extends StatefulWidget {
 
 class _PopularProductsState extends State<PopularProducts> {
   List<Product> demoProducts = new List<Product>();
-
+  int usuario1;
   Future<List<Product>> fetchProductos() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    String t = localStorage.getString('token');
+    var data = {'token': t.toString()};
+
+    // localStorage.setString('token', json.encode(body['token']));
+    var usuario = new List<Usuario>();
+    var res2 = await Network().usuario(data, '/getuser');
+    var body2 = json.decode(res2.body);
+    usuario1 = body2['user']['id'];
     var productos = new List<Product>();
     var res = await Network().productos('/listproductos');
     var body = json.decode(res.body);
@@ -43,6 +56,7 @@ class _PopularProductsState extends State<PopularProducts> {
   }
 
   Widget build(BuildContext context) {
+    Random random = new Random();
     return Column(
       children: [
         Padding(
@@ -58,13 +72,14 @@ class _PopularProductsState extends State<PopularProducts> {
               ...List.generate(
                 demoProducts.length,
                 (index) {
-                  if (demoProducts[index].isPopular)
+                  demoProducts[index].isPopular=random.nextBool();
+                  if (demoProducts[index].cantidad>0&&demoProducts[index].isPopular)
                     return ProductCard(
                       product: demoProducts[index],
                       press: () => Navigator.pushNamed(
                           context, MyProductoVistaClass.routeName,
-                          arguments:
-                              DetallesProducto(product: demoProducts[index])),
+                          arguments: DetallesProducto(
+                              product: demoProducts[index], idUser: usuario1)),
                     );
 
                   return SizedBox

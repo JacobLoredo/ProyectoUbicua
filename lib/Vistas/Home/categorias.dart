@@ -1,8 +1,45 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:proyectoubicua/Models/CategoriaP.dart';
 import 'package:proyectoubicua/Vistas/size_config.dart';
+import 'package:proyectoubicua/network_utils/api.dart';
 
-class Categorias extends StatelessWidget {
+class Categorias extends StatefulWidget {
+  @override
+  _CategoriasState createState() => _CategoriasState();
+}
+
+class _CategoriasState extends State<Categorias> {
+  List<CategoriP> demoCategorias = new List<CategoriP>();
+  int usuario1;
+  Future<List<CategoriP>> fetchProductos() async {
+    var categorias = new List<CategoriP>();
+    var res = await Network().productos('/listcategorias');
+    var body = json.decode(res.body);
+    print(body);
+    if (body['success']) {
+      for (var produ in body['categorias']) {
+        categorias.add(CategoriP.fromJson(produ));
+      }
+
+      return categorias;
+    } else {
+      throw Exception('Failed to load Producto');
+    }
+  }
+
+  @override
+  void initState() {
+    fetchProductos().then((value) {
+      setState(() {
+        demoCategorias.addAll(value);
+      });
+    });
+
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> categorias = [
       {"icon": "assets/icons/Flash Icon.svg", "text": "Flash Deal"},
@@ -11,20 +48,17 @@ class Categorias extends StatelessWidget {
       {"icon": "assets/icons/Flash Icon.svg", "text": "Daily Gift"},
       {"icon": "assets/icons/Flash Icon.svg", "text": "More"},
     ];
+    
     return Padding(
-      
       padding: EdgeInsets.all(getProportionateScreenWidth(20)),
       child: Row(
-        
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children:
-        
-         List.generate(
-          categorias.length,
+        children: List.generate(
+          demoCategorias.length,
           (index) => CategoryCard(
             icon: categorias[index]["icon"],
-            text: categorias[index]["text"],
+            text: demoCategorias[index].nombre,
             press: () {},
           ),
         ),
@@ -64,7 +98,7 @@ class CategoryCard extends StatelessWidget {
               child: SvgPicture.asset(icon),
             ),
             SizedBox(height: 5),
-            Text(text, textAlign: TextAlign.center)
+            Text(text, textAlign: TextAlign.center,maxLines: 2,)
           ],
         ),
       ),

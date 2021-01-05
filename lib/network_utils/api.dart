@@ -5,9 +5,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Network {
   final String _url =
       'http://192.168.100.63/proyecto-JacobLoredo/public/api/auth';
-  final String _urlProductos =
-      'http://192.168.100.63/proyecto-JacobLoredo/public/api';
   var token;
+  String urlProductos = 'http://192.168.100.63/proyecto-JacobLoredo/public/api';
+  String urlImagenesProductos =
+      'http://192.168.100.63/proyecto-JacobLoredo/public';
   // ignore: unused_element
   _getToken() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -22,9 +23,38 @@ class Network {
   }
 
   Future<http.Response> productos(apiUrl) {
-    var urlF = _urlProductos + apiUrl;
-    print(urlF);
+    var urlF = urlProductos + apiUrl;
+
     return http.get(urlF);
+  }
+
+  agregarproductos(data, apiUrl) async {
+    var fullUrl = urlProductos + apiUrl;
+    return await http.post(fullUrl,
+        body: jsonEncode(data), headers: _setHeaders());
+  }
+
+  eliminarproductos(data, apiUrl) async {
+    var fullUrl = urlProductos + apiUrl;
+    return await http.post(fullUrl,
+        body: jsonEncode(data), headers: _setHeaders());
+  }
+
+  confirmarproductos(data, apiUrl) async {
+    var fullUrl = urlProductos + apiUrl;
+    return await http.post(fullUrl,
+        body: jsonEncode(data), headers: _setHeaders());
+  }
+
+  usuario(data, apiUrl) async {
+    var urlF = urlProductos + apiUrl;
+    return await http.post(urlF,
+        body: jsonEncode(data).replaceAll('\\"', ""), headers: _setHeaders());
+  }
+
+  carritos(apiUrl) async {
+    var urlF = urlProductos + apiUrl;
+    return await http.get(urlF);
   }
 
   getData(apiUrl) async {

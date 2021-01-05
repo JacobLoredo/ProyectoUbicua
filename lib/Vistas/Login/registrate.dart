@@ -82,6 +82,7 @@ class _RegistrarmeFormState extends State<RegistrarmeForm> {
   String email;
   String name;
   String password;
+  String direccion;
 
   // ignore: non_constant_identifier_names
   String conform_password;
@@ -109,6 +110,8 @@ class _RegistrarmeFormState extends State<RegistrarmeForm> {
       child: Column(
         children: [
           buildUserNameFormField(),
+          SizedBox(height: getProportionateScreenHeight(30)),
+          buildUserDireccionFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildEmailFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
@@ -266,13 +269,45 @@ class _RegistrarmeFormState extends State<RegistrarmeForm> {
       ),
     );
   }
+  TextFormField buildUserDireccionFormField() {
+    return TextFormField(
+      keyboardType: TextInputType.streetAddress,
+      onSaved: (newValue) => direccion = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: kuserDirecionError);
+        } else {
+          removeError(error: kuserDirecionError);
+        }
+        direccion = value;
+      },
+      validator: (value) {
+        if (value.isEmpty) {
+          addError(error: kuserDirecionError);
+          return "";
+        }
+
+        direccion = value;
+        return null;
+      },
+      decoration: InputDecoration(
+        labelText: "Direccion",
+        hintText: "Ingresa tu direccion",
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: IconoCustumText(
+          icon: Icons.house_outlined,
+        ),
+      ),
+    );
+  }
 
   void _register() async {
     var data = {
       'name': name,
       'email': email,
       'password': password,
-      'password_confirmation': conform_password
+      'password_confirmation': conform_password,
+      'Direccion': direccion
     };
     var res = await Network().authData(data, '/signup');
     var body = json.decode(res.body);

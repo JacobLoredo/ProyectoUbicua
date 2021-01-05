@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:proyectoubicua/Models/Producto.dart';
+import 'package:proyectoubicua/Vistas/Home/botonCarrito.dart';
 import 'package:proyectoubicua/Vistas/Producto/body.dart';
 import 'package:proyectoubicua/Vistas/size_config.dart';
 import 'package:proyectoubicua/main.dart';
 
-class MyProductoVistaClass extends StatelessWidget {
+class MyProductoVistaClass extends StatefulWidget {
   const MyProductoVistaClass({Key key}) : super(key: key);
   static String routeName = "/productoVista";
 
+  @override
+  _MyProductoVistaClassState createState() => _MyProductoVistaClassState();
+}
+
+class _MyProductoVistaClassState extends State<MyProductoVistaClass> {
   @override
   Widget build(BuildContext context) {
     final DetallesProducto arguments =
@@ -21,6 +27,7 @@ class MyProductoVistaClass extends StatelessWidget {
           style:TextStyle(fontSize: 30,color:Colors.white,fontWeight: FontWeight.bold),
           
         ),
+       
         backgroundColor: colores['naranja'],
         leading: SizedBox(
           height: getProportionateScreenWidth(40),
@@ -34,7 +41,7 @@ class MyProductoVistaClass extends StatelessWidget {
           ),
         ),
       ),
-      body: Body(product: arguments.product),
+      body: Body(product: arguments.product,user: arguments.idUser,),
     );
   }
 }
@@ -61,5 +68,6 @@ class BotonReturn extends StatelessWidget {
 
 class DetallesProducto {
   final Product product;
-  DetallesProducto({@required this.product});
+  final int idUser;
+  DetallesProducto({@required this.product,@required this.idUser,});
 }

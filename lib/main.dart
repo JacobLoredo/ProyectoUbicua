@@ -19,6 +19,7 @@ const String kPassNullError = "Ingresa tu contraseña";
 const String kShortPassError = "Tu contraseña es demasiado corta,\n debe contener 8 caracteres";
 const String kMatchPassError = "Tu contraseña no coincide";
 const String kuserNameError = "Por favor ingresa un nombre de usuario";
+const String kuserDirecionError = "Por favor ingresa una direccion";
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.

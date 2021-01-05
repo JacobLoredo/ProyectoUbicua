@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proyectoubicua/Models/Producto.dart';
 import 'package:proyectoubicua/Vistas/size_config.dart';
 import 'package:proyectoubicua/main.dart';
+import 'package:proyectoubicua/network_utils/api.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -17,6 +18,7 @@ class ProductCard extends StatelessWidget {
   final GestureTapCallback press;
   @override
   Widget build(BuildContext context) {
+    Network imagen = new Network();
     return Padding(
       padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
       child: GestureDetector(
@@ -36,7 +38,7 @@ class ProductCard extends StatelessWidget {
                     ),
                     child: Hero(
                       tag: product.id.toString(),
-                      child: Image.asset(product.images),
+                      child: Image.network(imagen.urlImagenesProductos+ product.images),
                     ),
                   ),
                 ),

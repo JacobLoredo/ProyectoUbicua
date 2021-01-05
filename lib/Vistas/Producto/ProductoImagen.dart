@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proyectoubicua/Models/Producto.dart';
 import 'package:proyectoubicua/Vistas/size_config.dart';
 import 'package:proyectoubicua/main.dart';
+import 'package:proyectoubicua/network_utils/api.dart';
 
 class ProductoImagen extends StatefulWidget {
   const ProductoImagen({
@@ -16,6 +17,7 @@ class ProductoImagen extends StatefulWidget {
 }
 
 class _ProductoImagenState extends State<ProductoImagen> {
+  Network pick=new Network();
   int imagenSeleccionada = 0;
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class _ProductoImagenState extends State<ProductoImagen> {
             width: getProportionateScreenWidth(238),
             child: AspectRatio(
               aspectRatio: 1,
-              child: Image.asset(widget.product.images[imagenSeleccionada]),
+              child: Image.network(pick.urlImagenesProductos+widget.product.images),
             )),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -56,7 +58,7 @@ class _ProductoImagenState extends State<ProductoImagen> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Image.asset(widget.product.images),
+        child: Image.network(pick.urlImagenesProductos+widget.product.images),
       ),
     );
   }

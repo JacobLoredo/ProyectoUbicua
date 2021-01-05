@@ -1,12 +1,29 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:proyectoubicua/Vistas/Carrito/BodyCarrito.dart';
+import 'package:proyectoubicua/Vistas/Home/home.dart';
 import 'package:proyectoubicua/Vistas/size_config.dart';
 import 'package:proyectoubicua/Widgets/boton.dart';
-import 'package:proyectoubicua/main.dart';
+import 'package:proyectoubicua/network_utils/api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class CarritoVista extends StatelessWidget {
+//import 'package:proyectoubicua/main.dart';
+double total = 0;
+GlobalKey key = GlobalKey<CheckCarritoState>();
+
+class CarritoVista extends StatefulWidget {
   static String routeName = "/carrito";
+
   const CarritoVista({Key key}) : super(key: key);
+
+  @override
+  _CarritoVistaState createState() => _CarritoVistaState();
+}
+
+class _CarritoVistaState extends State<CarritoVista> {
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +43,26 @@ class CarritoVista extends StatelessWidget {
           ),
         ),
         body: BodyCarrito(),
-        bottomNavigationBar: CheckCarrito(),
+        bottomNavigationBar: CheckCarrito(
+          key: key,
+          
+        ),
       ),
     );
   }
 }
 
-class CheckCarrito extends StatelessWidget {
+class CheckCarrito extends StatefulWidget {
   const CheckCarrito({
     Key key,
+    
   }) : super(key: key);
+ 
+  @override
+  CheckCarritoState createState() => CheckCarritoState();
+}
 
+class CheckCarritoState extends State<CheckCarrito> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,36 +81,64 @@ class CheckCarrito extends StatelessWidget {
           )
         ],
       ),
-      child:Padding(
+      child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text.rich(
-              TextSpan(text: "Total: \n",
-              style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                ),
-              children: [
-                TextSpan(text: "\$7545",style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
-                ))
-              ]
-              ),
-              
+              TextSpan(
+                  text: "Total: \n",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                  children: [
+                    TextSpan(
+                        text: "\$${total.toStringAsFixed(2)}",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                        ))
+                  ]),
             ),
             SizedBox(
               width: getProportionateScreenWidth(190),
               child: MybuttonClass(
                 text: "Comprar",
-                press: (){},
+                press: () => confirmarCompra(context),
               ),
             )
           ],
         ),
-      ) ,
+      ),
     );
+  }
+}
+
+void confirmarCompra(BuildContext context) async {
+  SharedPreferences localStorage = await SharedPreferences.getInstance();
+  String t = localStorage.getString('token');
+  var data = {'token': t.toString()};
+  var res2 = await Network().usuario(data, '/getuser');
+  var body2 = json.decode(res2.body);
+  var data2 = {
+    'name': "",
+  };
+  print(body2['user']['id']);
+  var res = await Network()
+      .eliminarproductos(data2, '/Compra/${body2['user']['id']}');
+  var body = json.decode(res.body);
+  print(body);
+  if (body['success']) {
+    Scaffold.of(context)
+        .showSnackBar(SnackBar(content: Text("Compra Realizada!!")));
+   
+     await Navigator.push(
+          context,
+          new MaterialPageRoute(
+              builder: (context) => MyHomeClass(),
+          ),
+      );
   }
 }

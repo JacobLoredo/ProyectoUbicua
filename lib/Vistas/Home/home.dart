@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:proyectoubicua/Models/Usuario.dart';
 import 'package:proyectoubicua/Vistas/Home/Productos.dart';
 import 'package:proyectoubicua/Vistas/Home/barraBusqueda.dart';
 import 'package:proyectoubicua/Vistas/Home/botonCarrito.dart';
@@ -11,9 +12,46 @@ import 'package:proyectoubicua/main.dart';
 import 'package:proyectoubicua/network_utils/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MyHomeClass extends StatelessWidget {
+class MyHomeClass extends StatefulWidget {
   static String routeName = "/home";
   const MyHomeClass({Key key}) : super(key: key);
+
+  @override
+  _MyHomeClassState createState() => _MyHomeClassState();
+}
+
+class _MyHomeClassState extends State<MyHomeClass> {
+  List<Usuario> usuarios = new List<Usuario>();
+
+  Future<List<Usuario>> fetchUsuario() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    String t = localStorage.getString('token');
+    var data = {'token': t.toString()};
+
+    // localStorage.setString('token', json.encode(body['token']));
+    var usuario = new List<Usuario>();
+    var res = await Network().usuario(data, '/getuser');
+    var body = json.decode(res.body);
+
+    if (body['success']) {
+      usuario.add(Usuario.fromJson(body['user']));
+
+      return usuario;
+    } else {
+      throw Exception('Failed to load Usuario');
+    }
+  }
+
+  @override
+  void initState() {
+    fetchUsuario().then((value) {
+      setState(() {
+        usuarios.addAll(value);
+      });
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +114,8 @@ class MyHomeClass extends StatelessWidget {
                   color: Colors.white,
                 ),
                 title: Text(
-                  'Hola jacob',
+                  
+                  'Hola ${usuarios.length==0 ?"":usuarios[0].name}',
                   style: TextStyle(
                     fontWeight: FontWeight.normal,
                     fontSize: 18,
@@ -107,9 +146,7 @@ class MyHomeClass extends StatelessWidget {
               ),
               title: Text('Configuracion'),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
+               
                 Navigator.pop(context);
               },
             ),
@@ -174,7 +211,6 @@ class TituloSeccion extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-        
           GestureDetector(
             onTap: press,
             child: Text("Ver más"),
@@ -186,6 +222,7 @@ class TituloSeccion extends StatelessWidget {
 }
 
 void logout() async {
+  
   var res = await Network().productos('/listproductos');
   var body = json.decode(res.body);
   if (body['success']) {

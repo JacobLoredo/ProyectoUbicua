@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectoubicua/Models/Producto.dart';
@@ -6,10 +8,13 @@ import 'package:proyectoubicua/Vistas/Producto/ProductoImagen.dart';
 import 'package:proyectoubicua/Vistas/size_config.dart';
 import 'package:proyectoubicua/Widgets/boton.dart';
 import 'package:proyectoubicua/main.dart';
+import 'package:proyectoubicua/network_utils/api.dart';
 
 class Body extends StatelessWidget {
   final Product product;
-  const Body({Key key, @required this.product}) : super(key: key);
+  final int user;
+  const Body({Key key, @required this.product, @required this.user})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -88,10 +93,23 @@ class Body extends StatelessWidget {
           ),
           MybuttonClass(
             text: "Agregar al Carrito",
-            press: () {},
+            press: () => agregarCarrito(context,user, product.id),
           ),
         ],
       ),
     );
   }
+}
+
+void agregarCarrito(BuildContext context,int user, int producto) async {
+  var data = {
+    'name': "",
+  };
+  var res = await Network().agregarproductos(data, '/carrito/$user/$producto');
+  var body = json.decode(res.body);
+  print(body);
+  if(body['success']){
+    Scaffold.of(context).showSnackBar(SnackBar(content: Text("Agregado con exito!!")));
+  }
+  
 }

@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 class Product {
@@ -7,7 +8,8 @@ class Product {
   final String images;
   final List<Color> colors;
   final String price;
-  final bool isFavourite, isPopular;
+  bool isFavourite, isPopular;
+  
 
   Product({
     this.cantidad,
@@ -16,7 +18,7 @@ class Product {
     this.colors,
     
     this.isFavourite = false,
-    this.isPopular = true,
+    this.isPopular =true,
     @required this.title,
     @required this.price,
     @required this.description,
