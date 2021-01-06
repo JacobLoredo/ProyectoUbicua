@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:proyectoubicua/Vistas/Login/login.dart';
 import 'package:proyectoubicua/Vistas/size_config.dart';
@@ -8,8 +7,9 @@ import 'package:proyectoubicua/Widgets/formError.dart';
 import 'package:proyectoubicua/main.dart';
 import 'package:proyectoubicua/network_utils/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+//**Clase donde se muestra el formulario para poder ingresar como usuario a la aplicacon */
 class MyRegistrateClass extends StatelessWidget {
+  //**Nombre de la ruta donde se ubica la vista para registrarte*/
   static String routeName = "Vistas/Login";
   const MyRegistrateClass({Key key}) : super(key: key);
 
@@ -71,12 +71,12 @@ class MyRegistrateClass extends StatelessWidget {
     );
   }
 }
-
+//**Clase que crea el estado para el formulario donde el usuario ingrese sus datos y registrarse*/
 class RegistrarmeForm extends StatefulWidget {
   @override
   _RegistrarmeFormState createState() => _RegistrarmeFormState();
 }
-
+//**Clase que permite poner en pantalla  */
 class _RegistrarmeFormState extends State<RegistrarmeForm> {
   final _formKey = GlobalKey<FormState>();
   String email;

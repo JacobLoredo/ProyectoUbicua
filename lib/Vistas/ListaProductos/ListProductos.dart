@@ -12,12 +12,12 @@ import 'dart:convert';
 import 'package:proyectoubicua/network_utils/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PopularProducts extends StatefulWidget {
+class ListProducts extends StatefulWidget {
   @override
-  _PopularProductsState createState() => _PopularProductsState();
+  _ListProductsState createState() => _ListProductsState();
 }
 
-class _PopularProductsState extends State<PopularProducts> {
+class _ListProductsState extends State<ListProducts> {
   List<Product> demoProducts = new List<Product>();
   int usuario1;
   Future<List<Product>> fetchProductos() async {
@@ -64,7 +64,7 @@ class _PopularProductsState extends State<PopularProducts> {
           padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: TituloSeccion(
-              text: "Populares",
+              text: "Productos",
               press: () => Navigator.pushNamed(
                     context,
                     ListaProductos.routeName,
@@ -74,20 +74,22 @@ class _PopularProductsState extends State<PopularProducts> {
         SizedBox(height: getProportionateScreenWidth(20)),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: Row(
+          child: Column(
             children: [
               ...List.generate(
                 demoProducts.length,
                 (index) {
                   demoProducts[index].isPopular = random.nextBool();
-                  if (demoProducts[index].cantidad > 0 &&
-                      demoProducts[index].isPopular)
-                    return ProductCard(
-                      product: demoProducts[index],
-                      press: () => Navigator.pushNamed(
-                          context, MyProductoVistaClass.routeName,
-                          arguments: DetallesProducto(
-                              product: demoProducts[index], idUser: usuario1)),
+                  if (demoProducts[index].cantidad > 0)
+                    return Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: ProductCard(
+                        product: demoProducts[index],
+                        press: () => Navigator.pushNamed(
+                            context, MyProductoVistaClass.routeName,
+                            arguments: DetallesProducto(
+                                product: demoProducts[index], idUser: usuario1)),
+                      ),
                     );
 
                   return SizedBox

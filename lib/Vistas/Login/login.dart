@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:proyectoubicua/Vistas/Login/contrasenaolvidada/contrasenaolvidada.dart';
 import 'package:proyectoubicua/Vistas/Login/registrate.dart';
@@ -11,10 +10,12 @@ import 'package:proyectoubicua/main.dart';
 import 'package:proyectoubicua/network_utils/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+//**Clase donde se muestra el formulario para poder ingresar como usuario a la aplicacon */
 class MyloginClass extends StatelessWidget {
+ //**Nombre de la ruta donde se ubica la vista del login*/
    static String routeName = "Vistas/Login/";
   const MyloginClass({Key key}) : super(key: key);
-
+//** Widget  donde se muestra el logo y el formulario para ingresar a la aplicion.*/
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -79,12 +80,12 @@ class MyloginClass extends StatelessWidget {
         ));
   }
 }
-
+//**Clase que crea el estado para el formulario donde el usuario ingrese sus datos */
 class SignForm extends StatefulWidget {
   @override
   _SignFormState createState() => _SignFormState();
 }
-
+//**Clase que construye el formulario para que el usuario ingrese sus datos */
 class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
@@ -146,7 +147,8 @@ class _SignFormState extends State<SignForm> {
       ),
     );
   }
-
+//**Funcion que hace la consulta a la API donde se verifica que el usuario exista en los registros de la base de datos*/
+//** Y redirecciona a la pagina principal en caso deque exista ademas de colocar el token en memoria. */
   void _login() async{
     setState(() {
       _isLoading = true;
@@ -179,7 +181,7 @@ class _SignFormState extends State<SignForm> {
 
   }
 
-
+//**Funcion que regresa un TextFild donde se ingresa la contraseña del usuario*/
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
@@ -218,7 +220,7 @@ class _SignFormState extends State<SignForm> {
       ),
     );
   }
-
+//**Funcion que regresa un TextFild donde se ingresa el correo del usuario*/
   TextFormField buildEmailFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
@@ -260,7 +262,7 @@ class _SignFormState extends State<SignForm> {
     );
   }
 }
-
+//**Clase que coloca un icono en el TextFild */
 class IconoCustumText extends StatelessWidget {
   final IconData icon;
   const IconoCustumText({

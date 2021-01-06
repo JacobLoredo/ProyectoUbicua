@@ -10,17 +10,32 @@ import 'package:proyectoubicua/Widgets/boton.dart';
 import 'package:proyectoubicua/main.dart';
 import 'package:proyectoubicua/network_utils/api.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   final Product product;
   final int user;
   const Body({Key key, @required this.product, @required this.user})
       : super(key: key);
+
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  int maxl=4;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
-          ProductoImagen(product: product),
+          ProductoImagen(product: widget.product),
+           Padding(
+             padding: const EdgeInsets.all(0),
+             child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Text( "Disponible: ${widget.product.cantidad}",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    ),),
+           ),
           DetallesProducto(
             color: Colors.white,
             child: Column(
@@ -29,7 +44,7 @@ class Body extends StatelessWidget {
                   padding: EdgeInsets.symmetric(
                       horizontal: getProportionateScreenWidth(20)),
                   child: Text(
-                    "\$${product.price}",
+                    "\$${widget.product.price}",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                 ),
@@ -37,10 +52,12 @@ class Body extends StatelessWidget {
                   padding: EdgeInsets.symmetric(
                       horizontal: getProportionateScreenWidth(20)),
                   child: Text(
-                    product.title,
+                    widget.product.title,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                 ),
+               
+                
                 const SizedBox(
                   height: 20,
                 ),
@@ -50,8 +67,8 @@ class Body extends StatelessWidget {
                     right: getProportionateScreenWidth(64),
                   ),
                   child: Text(
-                    product.description,
-                    maxLines: 4,
+                    widget.product.description,
+                    maxLines: maxl,
                   ),
                 ),
                 Padding(
@@ -89,11 +106,11 @@ class Body extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 35,
+            height: 30,
           ),
           MybuttonClass(
             text: "Agregar al Carrito",
-            press: () => agregarCarrito(context,user, product.id),
+            press: () => agregarCarrito(context,widget.user, widget.product.id),
           ),
         ],
       ),

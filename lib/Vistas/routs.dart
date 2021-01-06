@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proyectoubicua/Vistas/Carrito/CarritoVista.dart';
+import 'package:proyectoubicua/Vistas/ListaProductos/ListaProductosVista.dart';
 import 'package:proyectoubicua/Vistas/Login/contrasenaolvidada/contrasenaolvidada.dart';
 import 'package:proyectoubicua/Vistas/Home/home.dart';
 import 'package:proyectoubicua/Vistas/Login/login.dart';
@@ -13,4 +14,5 @@ final Map<String, WidgetBuilder> routes = {
   MyHomeClass.routeName:(context) => MyHomeClass(),
   MyProductoVistaClass.routeName:(context) => MyProductoVistaClass(),
   CarritoVista.routeName:(context) => CarritoVista(),
+  ListaProductos.routeName:(context) => ListaProductos(),
 };

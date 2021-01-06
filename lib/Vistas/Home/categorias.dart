@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:proyectoubicua/Models/CategoriaP.dart';
 import 'package:proyectoubicua/Vistas/size_config.dart';
+import 'package:proyectoubicua/main.dart';
 import 'package:proyectoubicua/network_utils/api.dart';
 
 class Categorias extends StatefulWidget {
@@ -42,11 +42,11 @@ class _CategoriasState extends State<Categorias> {
 
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> categorias = [
-      {"icon": "assets/icons/Flash Icon.svg", "text": "Flash Deal"},
-      {"icon": "assets/icons/Flash Icon.svg", "text": "Bill"},
-      {"icon": "assets/icons/Flash Icon.svg", "text": "Game"},
-      {"icon": "assets/icons/Flash Icon.svg", "text": "Daily Gift"},
-      {"icon": "assets/icons/Flash Icon.svg", "text": "More"},
+      {"icon": Icon(Icons.local_restaurant_outlined,color: colores['naranja'],), "text": "Flash Deal"},
+      {"icon": Icon(Icons.wine_bar_outlined,color: colores['naranja']), "text": "Bill"},
+      {"icon": Icon(Icons.local_drink_rounded,color: colores['naranja']), "text": "Game"},
+      {"icon": Icon(Icons.medical_services_outlined,color: colores['naranja']), "text": "Daily Gift"},
+      {"icon": Icon(Icons.restaurant_rounded), "text": "More"},
     ];
     
     return Padding(
@@ -76,7 +76,7 @@ class CategoryCard extends StatelessWidget {
   }) : super(key: key);
 
   final String text;
-  final String icon;
+  final Icon icon;
   final GestureTapCallback press;
 
   @override
@@ -95,7 +95,8 @@ class CategoryCard extends StatelessWidget {
                 color: Color(0xFFFFECDF),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: SvgPicture.asset(icon),
+              
+              child: icon,
             ),
             SizedBox(height: 5),
             Text(text, textAlign: TextAlign.center,maxLines: 2,)

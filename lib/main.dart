@@ -7,10 +7,13 @@ import 'package:proyectoubicua/Vistas/theme.dart';
 void main() {
   runApp(MyApp());
 }
+
+//Lista de colores que se usan en la aplicacion//
 final colores = {
   "naranja": Color(0xFFFF8056),
   "gris":Color(0xFFF6F6F4),
 };
+//**Expresiones regulares y errores que se detectan en el login y register del usuario */
 final RegExp emailValidatorRegExp =
     RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 const String emailErrorNull = "Por favor ingresa tu Email";
@@ -21,8 +24,8 @@ const String kMatchPassError = "Tu contraseña no coincide";
 const String kuserNameError = "Por favor ingresa un nombre de usuario";
 const String kuserDirecionError = "Por favor ingresa una direccion";
 
+//**  Clase principal para ejecutar la aplicacion */
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(

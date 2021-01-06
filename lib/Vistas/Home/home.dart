@@ -63,29 +63,31 @@ class _MyHomeClassState extends State<MyHomeClass> {
         ],
         backgroundColor: colores['naranja'],
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenHeight(20),
-                vertical: getProportionateScreenHeight(2),
-              ),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: getProportionateScreenWidth(20),
-                  ),
-                  TituloSeccion(
-                    text: "Categorias",
-                    press: () {},
-                  ),
-                  Categorias(),
-                  PopularProducts(),
-                ],
-              ),
-            )
-          ],
+      body: SingleChildScrollView(
+              child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenHeight(20),
+                  vertical: getProportionateScreenHeight(2),
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: getProportionateScreenWidth(20),
+                    ),
+                    TituloSeccion(
+                      text: "Categorias",
+                      press: () {},
+                    ),
+                    Categorias(),
+                    PopularProducts(),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
       drawer: buildDrawer(context),
