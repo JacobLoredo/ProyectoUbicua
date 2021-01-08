@@ -7,10 +7,10 @@ import 'package:proyectoubicua/Widgets/boton.dart';
 import 'package:proyectoubicua/network_utils/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-//import 'package:proyectoubicua/main.dart';
+//**Variable para actualizar el precio total */
 double total = 0;
 GlobalKey key = GlobalKey<CheckCarritoState>();
-
+//**Clase para crear la vista del producto */
 class CarritoVista extends StatefulWidget {
   static String routeName = "/carrito";
 
@@ -19,7 +19,7 @@ class CarritoVista extends StatefulWidget {
   @override
   _CarritoVistaState createState() => _CarritoVistaState();
 }
-
+//**Clase para crear el estado del carrito */
 class _CarritoVistaState extends State<CarritoVista> {
   void initState() {
     super.initState();
@@ -51,7 +51,7 @@ class _CarritoVistaState extends State<CarritoVista> {
     );
   }
 }
-
+//**Clase para crear el boton de confirmar compra */
 class CheckCarrito extends StatefulWidget {
   const CheckCarrito({
     Key key,
@@ -61,7 +61,7 @@ class CheckCarrito extends StatefulWidget {
   @override
   CheckCarritoState createState() => CheckCarritoState();
 }
-
+//**Clase para mostrar el precio y el botn de confirmarc ompra */
 class CheckCarritoState extends State<CheckCarrito> {
   @override
   Widget build(BuildContext context) {
@@ -115,7 +115,7 @@ class CheckCarritoState extends State<CheckCarrito> {
     );
   }
 }
-
+//**Funcion que hace la peticion API para confirmar la compra */
 void confirmarCompra(BuildContext context) async {
   SharedPreferences localStorage = await SharedPreferences.getInstance();
   String t = localStorage.getString('token');

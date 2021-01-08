@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:proyectoubicua/Models/Producto.dart';
-import 'package:proyectoubicua/Vistas/Home/botonCarrito.dart';
 import 'package:proyectoubicua/Vistas/Producto/body.dart';
 import 'package:proyectoubicua/Vistas/size_config.dart';
 import 'package:proyectoubicua/main.dart';
-
+//**Clase que crea la vista para ver 1 producto de manera individual */
 class MyProductoVistaClass extends StatefulWidget {
   const MyProductoVistaClass({Key key}) : super(key: key);
   static String routeName = "/productoVista";
@@ -12,7 +11,7 @@ class MyProductoVistaClass extends StatefulWidget {
   @override
   _MyProductoVistaClassState createState() => _MyProductoVistaClassState();
 }
-
+//**Crea el estado del widget */
 class _MyProductoVistaClassState extends State<MyProductoVistaClass> {
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,6 @@ class _MyProductoVistaClassState extends State<MyProductoVistaClass> {
         title: Text(
           "Producto",
           style:TextStyle(fontSize: 30,color:Colors.white,fontWeight: FontWeight.bold),
-          
         ),
        
         backgroundColor: colores['naranja'],
@@ -45,7 +43,7 @@ class _MyProductoVistaClassState extends State<MyProductoVistaClass> {
     );
   }
 }
-
+//**Clase para construir un boton para regresar a una pantalla anterior */
 class BotonReturn extends StatelessWidget {
   const BotonReturn({
     Key key,
@@ -57,7 +55,6 @@ class BotonReturn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-      
       onPressed: press,
       child: Icon(this.icon),
       color: Colors.white,
@@ -65,7 +62,7 @@ class BotonReturn extends StatelessWidget {
     );
   }
 }
-
+//**Clase para poder hererar los elementos del producto de unavista a otra */
 class DetallesProducto {
   final Product product;
   final int idUser;

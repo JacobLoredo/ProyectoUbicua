@@ -11,15 +11,16 @@ import 'package:proyectoubicua/Vistas/size_config.dart';
 import 'dart:convert';
 import 'package:proyectoubicua/network_utils/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+//**Clase que crea el widget para los productos populares */
 class PopularProducts extends StatefulWidget {
   @override
   _PopularProductsState createState() => _PopularProductsState();
 }
-
+//**Crea el estado del widget */
 class _PopularProductsState extends State<PopularProducts> {
   List<Product> demoProducts = new List<Product>();
   int usuario1;
+  //**Funcion que hace la peticion a la API para traer todos los productos */
   Future<List<Product>> fetchProductos() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     String t = localStorage.getString('token');
@@ -44,7 +45,7 @@ class _PopularProductsState extends State<PopularProducts> {
       throw Exception('Failed to load Producto');
     }
   }
-
+//**Inicia el estado para recuperar productos */
   @override
   void initState() {
     fetchProductos().then((value) {
@@ -55,7 +56,7 @@ class _PopularProductsState extends State<PopularProducts> {
 
     super.initState();
   }
-
+//**Funcion que contruye el Widget */
   Widget build(BuildContext context) {
     Random random = new Random();
     return Column(

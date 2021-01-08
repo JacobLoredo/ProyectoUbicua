@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proyectoubicua/Vistas/size_config.dart';
 import 'package:proyectoubicua/main.dart';
-
+//**Clase donde se muestran los detalles del producto, como sus colores y los elementos que estan dentro de el. */
 class DetallesProducto extends StatelessWidget {
   const DetallesProducto({
     Key key,

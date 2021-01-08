@@ -6,7 +6,7 @@ import 'package:proyectoubicua/Vistas/Home/home.dart';
 import 'package:proyectoubicua/Vistas/Login/login.dart';
 import 'package:proyectoubicua/Vistas/Login/registrate.dart';
 import 'package:proyectoubicua/Vistas/Producto/productoVista.dart';
-
+//**Lista con las rutas de cada una de las vistas */
 final Map<String, WidgetBuilder> routes = {
   MyloginClass.routeName:(context) => MyloginClass(),
   MycontrasenaOlvidadaClass.routeName: (context) => MycontrasenaOlvidadaClass(),

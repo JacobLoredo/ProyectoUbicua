@@ -4,15 +4,16 @@ import 'package:proyectoubicua/Models/CategoriaP.dart';
 import 'package:proyectoubicua/Vistas/size_config.dart';
 import 'package:proyectoubicua/main.dart';
 import 'package:proyectoubicua/network_utils/api.dart';
-
+//**Clase que crea el widget para las categorias */
 class Categorias extends StatefulWidget {
   @override
   _CategoriasState createState() => _CategoriasState();
 }
-
+//**Crea el estado del widget */
 class _CategoriasState extends State<Categorias> {
   List<CategoriP> demoCategorias = new List<CategoriP>();
   int usuario1;
+//**Funcion que hace la peticion a la API para traer todos los productos */
   Future<List<CategoriP>> fetchProductos() async {
     var categorias = new List<CategoriP>();
     var res = await Network().productos('/listcategorias');
@@ -28,7 +29,7 @@ class _CategoriasState extends State<Categorias> {
       throw Exception('Failed to load Producto');
     }
   }
-
+//**Inicia el estado para recuperar productos */
   @override
   void initState() {
     fetchProductos().then((value) {
@@ -39,7 +40,7 @@ class _CategoriasState extends State<Categorias> {
 
     super.initState();
   }
-
+//**Funcion que contruye el Widget */
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> categorias = [
       {"icon": Icon(Icons.local_restaurant_outlined,color: colores['naranja'],), "text": "Flash Deal"},
@@ -66,7 +67,7 @@ class _CategoriasState extends State<Categorias> {
     );
   }
 }
-
+//*Clase que crea la carta donde se pone la informacion de la categoria */
 class CategoryCard extends StatelessWidget {
   const CategoryCard({
     Key key,
@@ -74,11 +75,13 @@ class CategoryCard extends StatelessWidget {
     @required this.text,
     @required this.press,
   }) : super(key: key);
-
+  //*text->Nombre de la categoria */
+  //**icon->Icono de la categoria */
+  //**press->evento para detectar click*/
   final String text;
   final Icon icon;
   final GestureTapCallback press;
-
+//**Funcion que contruye el Widget */
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

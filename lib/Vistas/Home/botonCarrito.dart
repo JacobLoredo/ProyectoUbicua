@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proyectoubicua/Vistas/Carrito/CarritoVista.dart';
 import 'package:proyectoubicua/Vistas/size_config.dart';
 import 'package:proyectoubicua/main.dart';
-
+//**Clase que construye un boton con el icono de carrito y la funcionalidad de redireccionar a otra vista */
 class BotonCarrito extends StatelessWidget {
   const BotonCarrito({
     Key key,

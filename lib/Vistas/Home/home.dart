@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:proyectoubicua/Models/Usuario.dart';
 import 'package:proyectoubicua/Vistas/Home/Productos.dart';
@@ -11,18 +10,20 @@ import 'package:proyectoubicua/Vistas/size_config.dart';
 import 'package:proyectoubicua/main.dart';
 import 'package:proyectoubicua/network_utils/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+//**Clase donde se muestra la pagina principal.*/
 class MyHomeClass extends StatefulWidget {
+  //**Nombre de la ruta donde se ubica la vista home*/
   static String routeName = "/home";
   const MyHomeClass({Key key}) : super(key: key);
 
   @override
   _MyHomeClassState createState() => _MyHomeClassState();
 }
+//**Clase que crea el estado donde se cargan las categorias y los productos provenietes de la API*/
 
 class _MyHomeClassState extends State<MyHomeClass> {
   List<Usuario> usuarios = new List<Usuario>();
-
+//**Funcion que realiza la peticion de usuario a la API por medio del token almacenado en el storege */
   Future<List<Usuario>> fetchUsuario() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     String t = localStorage.getString('token');
@@ -41,7 +42,7 @@ class _MyHomeClassState extends State<MyHomeClass> {
       throw Exception('Failed to load Usuario');
     }
   }
-
+//**Funcion que inicia el estado del Widget */
   @override
   void initState() {
     fetchUsuario().then((value) {
@@ -52,7 +53,7 @@ class _MyHomeClassState extends State<MyHomeClass> {
 
     super.initState();
   }
-
+//**Widget donde se construye cada uno de los elementos de la vista */
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +94,7 @@ class _MyHomeClassState extends State<MyHomeClass> {
       drawer: buildDrawer(context),
     );
   }
-
+//**Funcion que contruye y regresa el Drawer de la vista */
   Drawer buildDrawer(BuildContext context) {
     return Drawer(
       child: ListView(
@@ -187,7 +188,7 @@ class _MyHomeClassState extends State<MyHomeClass> {
     );
   }
 }
-
+//**Clase que contruye un titulo con si link para redirigir a otra vista */
 class TituloSeccion extends StatelessWidget {
   const TituloSeccion({
     Key key,

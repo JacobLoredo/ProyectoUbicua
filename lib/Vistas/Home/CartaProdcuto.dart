@@ -3,7 +3,7 @@ import 'package:proyectoubicua/Models/Producto.dart';
 import 'package:proyectoubicua/Vistas/size_config.dart';
 import 'package:proyectoubicua/main.dart';
 import 'package:proyectoubicua/network_utils/api.dart';
-
+//**Clase que crea la carta respectiva para cada producto */
 class ProductCard extends StatelessWidget {
   const ProductCard({
     Key key,
@@ -12,7 +12,9 @@ class ProductCard extends StatelessWidget {
     @required this.product, 
     @required this.press,
   }) : super(key: key);
-
+//** width->Tamaño de la carta del producto*/
+//**product->proucto correspondiente*/
+//**press->Evento para detectar el click */
   final double width, aspectRetio;
   final  Product product;
   final GestureTapCallback press;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proyectoubicua/Vistas/size_config.dart';
 import 'package:proyectoubicua/main.dart';
-
+//**Clase que construye una barra de busqueda con su diseño correspondiete */
 class BarraBusqueda extends StatelessWidget {
   const BarraBusqueda({
     Key key,

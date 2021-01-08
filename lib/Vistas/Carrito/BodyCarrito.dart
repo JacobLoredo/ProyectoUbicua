@@ -8,17 +8,16 @@ import 'package:proyectoubicua/Vistas/size_config.dart';
 import 'package:proyectoubicua/main.dart';
 import 'package:proyectoubicua/network_utils/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+//**Clase para crear elcuerpo de la vista del Carrito */
 class BodyCarrito extends StatefulWidget {
   const BodyCarrito({Key key}) : super(key: key);
-
+//**Creacion del estado de la clase */
   @override
   _BodyCarritoState createState() => _BodyCarritoState();
 }
-
 class _BodyCarritoState extends State<BodyCarrito> {
   List<Product> demoProducts = new List<Product>();
-
+//**Metodo para poder traer todos los productos  */
   Future<List<Product>> fetchProductos() async {
     var productos = new List<Product>();
     var res = await Network().productos('/listproductos');
@@ -36,7 +35,7 @@ class _BodyCarritoState extends State<BodyCarrito> {
   }
 
   List<Usuario> usuarios = new List<Usuario>();
-
+//**Funcion para traer la informacion del usuario actual */
   Future<List<Usuario>> fetchUsuario() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     String t = localStorage.getString('token');
@@ -58,6 +57,7 @@ class _BodyCarritoState extends State<BodyCarrito> {
 
   List<Product> carritos = new List<Product>();
   int user = 0;
+  //**Funcion para traer todos los elemtentos que pertenecen al carrito de 1 solo usuario */
   Future<List<Product>> fetchCarrito() async {
     var carro = new List<Product>();
     SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -87,7 +87,7 @@ class _BodyCarritoState extends State<BodyCarrito> {
       throw Exception('Failed to load Producto');
     }
   }
-
+//**Iniciar el estado para traer todos las peticiones  */
   @override
   void initState() {
     setState(() {
@@ -109,7 +109,7 @@ class _BodyCarritoState extends State<BodyCarrito> {
 
     super.initState();
   }
-
+//**Construccion del Widget */
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -138,7 +138,7 @@ class _BodyCarritoState extends State<BodyCarrito> {
     );
   }
 }
-
+ //**Clase donde se carga la informacion del producto*/
 class ProductoCarrito extends StatelessWidget {
   const ProductoCarrito({
     Key key,
@@ -155,7 +155,7 @@ class ProductoCarrito extends StatelessWidget {
     );
   }
 }
-
+//**Clase para los estilos de un producto en el carrito */
 class ProductoEnCarrito extends StatelessWidget {
   const ProductoEnCarrito({
     this.carrito,
@@ -226,7 +226,7 @@ class ProductoEnCarrito extends StatelessWidget {
     );
   }
 }
-
+//**Clase para crear el boton de eliminar un producto */
 class BotonEliminar extends StatelessWidget {
   const BotonEliminar({
     Key key,
@@ -245,7 +245,7 @@ class BotonEliminar extends StatelessWidget {
     );
   }
 }
-
+//**Clase para hacer la peticion API para eliminar un elemento del carrito */
 void eliminarCarrito(BuildContext context, int producto,Function function) async {
   SharedPreferences localStorage = await SharedPreferences.getInstance();
   String t = localStorage.getString('token');

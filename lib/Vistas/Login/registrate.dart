@@ -76,7 +76,12 @@ class RegistrarmeForm extends StatefulWidget {
   @override
   _RegistrarmeFormState createState() => _RegistrarmeFormState();
 }
-//**Clase que permite poner en pantalla  */
+//**Clase que permite poner en pantalla los diferentes textField */
+//**email->Guarda el correo que ingreso el usuario */
+//**name->Guarda el nombre que ingreso el usuario */
+//**password->Guarda la contraseña que ingreso el usuario */
+//**conform_password->Guarda la confirmacion de la contraseña que ingreso el usuario */
+//**errors->Guarda los errores de algun dato que no coincidan que ingreso el usuario */
 class _RegistrarmeFormState extends State<RegistrarmeForm> {
   final _formKey = GlobalKey<FormState>();
   String email;
@@ -89,20 +94,21 @@ class _RegistrarmeFormState extends State<RegistrarmeForm> {
   bool remember = false;
   final List<String> errors = [];
 
+//**Funcion que agrega el error correspondiente a errors */
   void addError({String error}) {
     if (!errors.contains(error))
       setState(() {
         errors.add(error);
       });
   }
-
+//**Funcion que quita el error correspondiente a errors */
   void removeError({String error}) {
     if (errors.contains(error))
       setState(() {
         errors.remove(error);
       });
   }
-
+//**Widget donde se construye cada uno de los elementos de la vista */
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -135,7 +141,7 @@ class _RegistrarmeFormState extends State<RegistrarmeForm> {
       ),
     );
   }
-
+//**Funcion que regresa un TextFild donde se ingresa la confirmacion de la contraseña del usuario*/
   TextFormField buildConformPassFormField() {
     return TextFormField(
       obscureText: true,
@@ -168,7 +174,7 @@ class _RegistrarmeFormState extends State<RegistrarmeForm> {
       ),
     );
   }
-
+//**Funcion que regresa un TextFild donde se ingresa la contraseña del usuario*/
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
@@ -201,7 +207,7 @@ class _RegistrarmeFormState extends State<RegistrarmeForm> {
       ),
     );
   }
-
+//**Funcion que regresa un TextFild donde se ingresa el correo del usuario*/
   TextFormField buildEmailFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
@@ -237,7 +243,7 @@ class _RegistrarmeFormState extends State<RegistrarmeForm> {
       ),
     );
   }
-
+//**Funcion que regresa un TextFild donde se ingresa el nombre del usuario*/
   TextFormField buildUserNameFormField() {
     return TextFormField(
       keyboardType: TextInputType.name,
@@ -269,6 +275,7 @@ class _RegistrarmeFormState extends State<RegistrarmeForm> {
       ),
     );
   }
+  //**Funcion que regresa un TextFild donde se ingresa la direccion del usuario*/
   TextFormField buildUserDireccionFormField() {
     return TextFormField(
       keyboardType: TextInputType.streetAddress,
@@ -300,7 +307,8 @@ class _RegistrarmeFormState extends State<RegistrarmeForm> {
       ),
     );
   }
-
+//**Funcion que hace la consulta a la API donde se da de alta al usuario en los registros de la base de datos*/
+//** Y redirecciona a la pagina login en caso de color todos los datos validos. */
   void _register() async {
     var data = {
       'name': name,

@@ -3,7 +3,7 @@ import 'package:proyectoubicua/Models/Producto.dart';
 import 'package:proyectoubicua/Vistas/size_config.dart';
 import 'package:proyectoubicua/main.dart';
 import 'package:proyectoubicua/network_utils/api.dart';
-
+//**Clase para crear el carrete de imagenes de un producto */
 class ProductoImagen extends StatefulWidget {
   const ProductoImagen({
     Key key,
@@ -15,7 +15,7 @@ class ProductoImagen extends StatefulWidget {
   @override
   _ProductoImagenState createState() => _ProductoImagenState();
 }
-
+//**Creacion del estado de la clase */
 class _ProductoImagenState extends State<ProductoImagen> {
   Network pick=new Network();
   int imagenSeleccionada = 0;
